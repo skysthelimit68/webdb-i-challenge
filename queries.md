@@ -50,5 +50,25 @@ INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID
 GROUP BY Customers.City;
 
 ## delete all users that have no orders. Should delete 17 (or 18 if you haven't deleted the record added) records.
+???? why is this not working on W3
+DELETE Customers
+FROM Customers
+LEFT JOIN Orders
+ON Customers.CustomerID = Orders.CustomerID
+WHERE Orders.OrderID IS null;
 
 
+-- retrieve a full list of customers with each of their orders (including customers never place an order, returnning null) using left join, customer id returning null if not placing order
+
+SELECT * FROM Customers
+LEFT JOIN Orders
+ON Customers.CustomerID = Orders.CustomerID
+
+-- to get a list of customers with the number of orders per each customer using left join sorting by number of order asc--
+
+SELECT Customers.CustomerID, COUNT (DISTINCT Orders.OrderID) 
+FROM Customers
+LEFT JOIN Orders
+ON Customers.CustomerID = Orders.CustomerID
+GROUP BY Customers.CustomerID
+ORDER BY COUNT (DISTINCT Orders.OrderID) ASC
